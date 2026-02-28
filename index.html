@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RocketLaunchpad - Upcoming Launches</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-title">
+      <span class="rocket-icon">&#127756;</span>
+      RocketLaunchpad
+    </div>
+    <div class="next-launch-box" id="next-launch-box">
+      <div class="next-launch-label">Next Launch</div>
+      <div class="next-launch-name" id="next-launch-name">Loading...</div>
+      <div class="next-launch-countdown" id="next-launch-countdown">--d --h --m --s</div>
+    </div>
+  </header>
+
+  <section class="filter-bar" id="filter-bar"></section>
+
+  <div id="banner-container"></div>
+
+  <div class="status-bar" id="status-bar"></div>
+
+  <main class="main-content">
+    <div class="launch-grid" id="launch-grid"></div>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
