@@ -9,16 +9,18 @@ import {
   renderEmptyState,
   renderLastUpdated,
 } from './components.js';
-import { startCountdowns, stopCountdowns } from './countdown.js';
+import { startCountdowns } from './countdown.js';
+import { createFilterState, applyFilters, renderFilters } from './filters.js';
 
 const grid = document.getElementById('launch-grid');
 const bannerContainer = document.getElementById('banner-container');
 const statusBar = document.getElementById('status-bar');
+const filterBar = document.getElementById('filter-bar');
 const nextLaunchName = document.getElementById('next-launch-name');
 const nextLaunchCountdown = document.getElementById('next-launch-countdown');
 
 let allLaunches = [];
-let filterState = { locations: new Set(), providers: new Set() };
+const filterState = createFilterState();
 
 // Show loading skeletons
 grid.innerHTML = renderLoadingSkeleton(6);
@@ -42,20 +44,8 @@ function updateNextLaunchHeader() {
   }
 }
 
-function applyFilters(launches) {
-  return launches.filter(launch => {
-    const locationMatch = filterState.locations.size === 0 ||
-      [...filterState.locations].some(loc =>
-        (launch.pad?.location?.name || '').includes(loc)
-      );
-    const providerMatch = filterState.providers.size === 0 ||
-      filterState.providers.has(launch.launch_service_provider?.name);
-    return locationMatch && providerMatch;
-  });
-}
-
 function renderGrid() {
-  const filtered = applyFilters(allLaunches);
+  const filtered = applyFilters(allLaunches, filterState);
 
   if (filtered.length === 0 && allLaunches.length > 0) {
     grid.innerHTML = renderEmptyState();
@@ -63,6 +53,11 @@ function renderGrid() {
   }
 
   grid.innerHTML = filtered.map(renderLaunchCard).join('');
+}
+
+function onFilterChange() {
+  renderGrid();
+  startCountdowns(getNextLaunch, nextLaunchCountdown);
 }
 
 async function loadData() {
@@ -88,13 +83,11 @@ async function loadData() {
   allLaunches = result.launches;
   statusBar.textContent = result.timestamp ? renderLastUpdated(result.timestamp) : '';
 
+  renderFilters(filterBar, filterState, allLaunches, onFilterChange);
   renderGrid();
   updateNextLaunchHeader();
   startCountdowns(getNextLaunch, nextLaunchCountdown);
 }
-
-// Expose for filters module
-export { allLaunches, filterState, renderGrid, loadData };
 
 // Initial load
 loadData();
