@@ -1,9 +1,23 @@
 import './App.css';
 import { useLaunches } from './hooks/useLaunches';
+import { useFilters } from './hooks/useFilters';
 import { LaunchGrid } from './components/LaunchGrid';
+import { FilterBar } from './components/FilterBar';
 
 function App() {
   const { launches, state, errorMessage, lastUpdated, retry } = useLaunches();
+  const {
+    filteredLaunches,
+    availableLocations,
+    availableProviders,
+    selectedLocations,
+    selectedProviders,
+    toggleLocation,
+    toggleProvider,
+    clearAll,
+    activeCount,
+    hasActiveFilters,
+  } = useFilters(launches);
 
   return (
     <div className="app">
@@ -14,14 +28,28 @@ function App() {
         </p>
       </header>
 
+      {launches.length > 0 && (
+        <FilterBar
+          availableLocations={availableLocations}
+          availableProviders={availableProviders}
+          selectedLocations={selectedLocations}
+          selectedProviders={selectedProviders}
+          onToggleLocation={toggleLocation}
+          onToggleProvider={toggleProvider}
+          onClearAll={clearAll}
+          activeCount={activeCount}
+        />
+      )}
+
       <main style={{ paddingBottom: '2rem' }}>
         <LaunchGrid
-          launches={launches}
+          launches={filteredLaunches}
           state={state}
           errorMessage={errorMessage}
           lastUpdated={lastUpdated}
           onRetry={retry}
-          hasActiveFilters={false}
+          onClearFilters={clearAll}
+          hasActiveFilters={hasActiveFilters}
         />
       </main>
     </div>

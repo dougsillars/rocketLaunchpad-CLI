@@ -1,0 +1,140 @@
+.filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #0f0f23;
+  padding: 1rem 0;
+  border-bottom: 1px solid #2a2a4a;
+  margin-bottom: 1rem;
+}
+
+.filter-bar-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filter-group-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b6b8a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.filter-chip {
+  padding: 0.3rem 0.7rem;
+  border-radius: 9999px;
+  border: 1px solid #2a2a4a;
+  background: transparent;
+  color: #8b8ba7;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.filter-chip:hover {
+  border-color: #4a4a6a;
+  color: #c0c0d8;
+}
+
+.filter-chip.active {
+  background-color: #1e3a5f;
+  border-color: #3b82f6;
+  color: #93c5fd;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  align-self: flex-end;
+  padding-bottom: 0.2rem;
+}
+
+.filter-count {
+  font-size: 0.75rem;
+  color: #60a5fa;
+  background: #1e3a5f;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+}
+
+.filter-clear {
+  background: none;
+  border: none;
+  color: #60a5fa;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.filter-clear:hover {
+  color: #93c5fd;
+}
+
+/* Mobile drawer */
+.filter-toggle {
+  display: none;
+  width: 100%;
+  padding: 0.6rem 1rem;
+  background: #1a1a2e;
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  color: #c0c0d8;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+}
+
+.filter-toggle:hover {
+  border-color: #4a4a6a;
+}
+
+.filter-drawer {
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .filter-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .filter-drawer {
+    display: none;
+  }
+
+  .filter-drawer.open {
+    display: block;
+    padding-top: 0.75rem;
+  }
+
+  .filter-bar-inner {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .filter-group {
+    min-width: unset;
+  }
+}
